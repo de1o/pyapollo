@@ -84,8 +84,8 @@ class ApolloClient(object):
         if namespace not in self._cache:
             self._cache[namespace] = {}
             logging.getLogger(__name__).info("Add namespace '%s' to local cache", namespace)
-            # This is a new namespace, need to do a blocking fetch to populate the local cache
-            self._long_poll()
+            # This is a new namespace, need to get config from config server without cache
+            self._uncached_http_get(namespace=namespace)
 
         if key in self._cache[namespace]:
             return self._cache[namespace][key]
